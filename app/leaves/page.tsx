@@ -5,8 +5,12 @@ import LeaveBalance from "@/components/LeaveBalance";
 import LeaveTable from "@/components/LeaveTable";
 
 async function getLeaveData() {
+  const baseUrl =
+    process.env.NEXT_PUBLIC_BASE_URL ||
+    "http://localhost:3000";
+
   const res = await fetch(
-    "http://localhost:3000/api/leaves",
+    new URL("/api/leaves", baseUrl).toString(),
     {
       cache: "no-store",
     }

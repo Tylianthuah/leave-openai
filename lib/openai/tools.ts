@@ -119,4 +119,27 @@ export const tools: OpenAI.Chat.ChatCompletionTool[] = [
       },
     },
   },
+  {
+    type: "function",
+
+    function: {
+      name: "getLeaveBalance",
+
+      description: "Get leave balance. Can get total balance or specific leave type balance (Casual Leave, Sick Leave, or Vacation Leave)",
+
+      parameters: {
+        type: "object",
+
+        properties: {
+          leaveType: {
+            type: "string",
+
+            description: "Optional: specific leave type to check (Casual Leave, Sick Leave, or Vacation Leave). If not provided, returns all balances",
+          },
+        },
+
+        required: [],
+      },
+    },
+  },
 ];

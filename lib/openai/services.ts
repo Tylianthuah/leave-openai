@@ -16,6 +16,9 @@ export async function getAIResponse(
 
       Rules:
 
+      - If user asks about leave balance,
+        use getLeaveBalance tool
+
       - If user wants leave,
         always use createLeave tool
 
@@ -62,6 +65,8 @@ export async function getAIResponse(
 
   // TOOL EXECUTION
   if (assistantMessage.tool_calls) {
+    let oooMessage: string | null = null;
+
     for (const toolCall of assistantMessage.tool_calls) {
       if (!('function' in toolCall) || toolCall.type !== 'function') {
         continue;
@@ -80,6 +85,11 @@ export async function getAIResponse(
 
       const toolResult = await toolFunction(functionArgs);
 
+      // Capture OOO message if scheduleOOO tool was used
+      if (functionName === "scheduleOOO" && "oooMessage" in toolResult) {
+        oooMessage = (toolResult as any).oooMessage;
+      }
+
       messages.push({
         role: "tool",
 
@@ -96,6 +106,16 @@ export async function getAIResponse(
 
         messages,
       });
+
+    const responseContent = finalResponse.choices[0].message.content || "";
+
+    // Append OOO message if it was generated
+    if (oooMessage && !responseContent.includes(oooMessage)) {
+      return {
+        role: "assistant",
+        content: `${responseContent}\n\n**Out of Office Message:**\n${oooMessage}`,
+      };
+    }
 
     return finalResponse
       .choices[0].message;

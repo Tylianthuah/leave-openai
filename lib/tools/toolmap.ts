@@ -6,6 +6,8 @@ import { cancelLeave } from "./cancelLeave";
 
 import {scheduleOOO} from "./scheduleOOO";
 
+import { getLeaveBalance } from "./getLeaveBalance";
+
 export const toolmap = {
   createLeave,
 
@@ -14,4 +16,6 @@ export const toolmap = {
   cancelLeave,
 
   scheduleOOO,
+
+  getLeaveBalance,
 };

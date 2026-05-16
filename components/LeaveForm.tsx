@@ -43,7 +43,7 @@ export default function LeaveForm() {
 
   async function handleSubmit() {
     const res = await fetch(
-      "/api/leaves",
+      "http://localhost:3000/api/leaves",
       {
         method: "POST",
 
