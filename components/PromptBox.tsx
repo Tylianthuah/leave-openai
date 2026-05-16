@@ -139,7 +139,7 @@ export default function PromptBox() {
                 e.target.value
               )
             }
-            className="min-h-[120px] resize-none rounded-2xl border-0 bg-muted/60 focus-visible:ring-1 text-base"
+            className="min-h-30 resize-none rounded-2xl border-0 bg-muted/60 focus-visible:ring-1 text-base"
           />
 
           <div className="flex justify-end">

@@ -130,7 +130,6 @@ export default function LeaveForm() {
                 mode="single"
                 selected={fromDate}
                 onSelect={setFromDate}
-                initialFocus
               />
             </PopoverContent>
           </Popover>
@@ -164,7 +163,6 @@ export default function LeaveForm() {
                 mode="single"
                 selected={toDate}
                 onSelect={setToDate}
-                initialFocus
               />
             </PopoverContent>
           </Popover>

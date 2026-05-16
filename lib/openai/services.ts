@@ -63,33 +63,29 @@ export async function getAIResponse(
   // TOOL EXECUTION
   if (assistantMessage.tool_calls) {
     for (const toolCall of assistantMessage.tool_calls) {
-      const functionName =
-        toolCall.function.name;
+      if (!('function' in toolCall) || toolCall.type !== 'function') {
+        continue;
+      }
 
-      const functionArgs =
-        JSON.parse(
-          toolCall.function.arguments
-        );
+      const functionName = toolCall.function.name;
+
+      const functionArgs = toolCall.function.arguments
+        ? JSON.parse(toolCall.function.arguments)
+        : undefined;
 
       const toolFunction =
         toolmap[
           functionName as keyof typeof toolmap
         ];
 
-      const toolResult =
-        await toolFunction(
-          functionArgs
-        );
+      const toolResult = await toolFunction(functionArgs);
 
       messages.push({
         role: "tool",
 
-        tool_call_id:
-          toolCall.id,
+        tool_call_id: toolCall.id,
 
-        content: JSON.stringify(
-          toolResult
-        ),
+        content: JSON.stringify(toolResult),
       });
     }
 
